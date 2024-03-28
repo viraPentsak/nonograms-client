@@ -1,31 +1,29 @@
-import React, {useContext} from "react";
-import {CellFill, Color} from "../../types/index";
+import {ReactNode, CSSProperties, FC} from "react";
+import {CellFill} from "../../types/index";
 import {crossIcon} from "./../../assets";
-import {PuzzleContext} from "../../contexts/index";
+import {usePuzzle} from "../../hooks/usePuzzle";
 
 interface FillSelectionProps {
-    selectedFill: Color,
+    selectedFill: CellFill,
     setFill: (cellFill: CellFill) => void
 }
 
-const FillSelection = (props: FillSelectionProps) => {
-    const puzzle = useContext(PuzzleContext);
-    if (!puzzle) {
-        return null
-    }
+const FillSelection:FC<FillSelectionProps> = (props) => {
+    const puzzle = usePuzzle();
+    if (!puzzle) return;
 
-    const {colors}: FillSelectionProps = puzzle;
+    const {colors} = puzzle;
     const {setFill} = props;
 
-    const setNoneFill = ()=>setFill("none");
+    const onClickHandler = () => setFill("none");
 
     const itemClassNames = "w-24 h-10 border-2 rounded-md  border-slate-500 mx-1  bg-repeat"
-    const defaultStyling: React.CSSProperties = {
+    const defaultStyling: CSSProperties = {
         backgroundImage: `url(${crossIcon})`,
         backgroundSize: "12px"
     };
-    const fillsRendered: React.ReactNode[] = colors.map((color) => {
-        const style: React.CSSProperties = {backgroundColor: `${color}`};
+    const fillsRendered: ReactNode[] = colors.map((color) => {
+        const style: CSSProperties = {backgroundColor: `${color}`};
         return <div className={itemClassNames}
                     onClick={() => setFill(color)}
                     style={style}
@@ -38,7 +36,7 @@ const FillSelection = (props: FillSelectionProps) => {
             <div className="flex flex-row justify-center pb-4">
                 {fillsRendered}
                 <div className={itemClassNames}
-                     onClick={setNoneFill}
+                     onClick={onClickHandler}
                      style={defaultStyling}
                      key={"empty"}/>
             </div>

@@ -1,14 +1,15 @@
 import {useState} from "react";
+import {I_Puzzle} from "../../interfaces/index";
+import {CellFill} from "../../types/index";
+import {usePuzzle} from "../../hooks/usePuzzle";
 import FillSelection from "./FillSelection";
-import {CellFill, I_Puzzle} from "../../types/index";
-import {PuzzleContext} from "../../contexts/index";
 
-export const Puzzle = (props: I_Puzzle) => {
-    const [selectedFill, setFill] = useState<CellFill>(props.colors[0]);
 
-    return (
-        <PuzzleContext.Provider value={props}>
-            <FillSelection selectedFill={selectedFill} setFill={setFill}/>
-        </PuzzleContext.Provider>
-    );
+export const Puzzle = () => {
+    const puzzle = usePuzzle();
+    if (!puzzle) return;
+    const {colors}: I_Puzzle = puzzle;
+    const [selectedFill, setFill] = useState<CellFill>(colors[0]);
+
+    return (<FillSelection selectedFill={selectedFill} setFill={setFill}/>);
 };

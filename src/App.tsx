@@ -1,14 +1,13 @@
 import {Puzzle} from "./components";
-import {items} from './../mockdata/data.json'
-import {I_Puzzle} from "./types/index";
+import PuzzleProvider from "./contexts/puzzle";
 
 function App() {
-    const puzzle = items[0] as I_Puzzle;
     return (
         <div className="bg-slate-100 h-dvh">
             <div className="container mx-auto xl">
-
-                <Puzzle {...puzzle}/>
+                <PuzzleProvider>
+                    <Puzzle/>
+                </PuzzleProvider>
             </div>
         </div>
     )
