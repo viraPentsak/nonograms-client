@@ -33,7 +33,7 @@ const FillSelection:FC<FillSelectionProps> = (props) => {
     return (
         <>
             <h3 className="text-xl text-center py-2">Select color:</h3>
-            <div className="flex flex-row justify-center pb-4">
+            <div className="flex flex-row justify-center pb-4 text-slate-50">
                 {fillsRendered}
                 <div className={itemClassNames}
                      onClick={onClickHandler}
