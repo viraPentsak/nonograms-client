@@ -5,14 +5,15 @@ import {CellMap} from "../../types/index";
 export interface PuzzleCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
     cellId?: string,
     className?: string,
-    cellMap: CellMap
+    cellMap: CellMap,
+    eventsMap?: { [key: keyof HTMLElementEventMap]: Function }
 }
 
 const PuzzleCell: FC<PuzzleCellProps> = (props: PuzzleCellProps) => {
-    const {cellId, cellMap, onClick, onAuxClick} = props;
+    const {cellId, cellMap, eventsMap} = props;
 
-    const bgClassName = () =>{
-        if(cellId && (cellMap[cellId] === "none")){
+    const bgClassName = () => {
+        if (cellId && (cellMap[cellId] === "none")) {
             return "bg-cross";
         }
         return ""
@@ -20,9 +21,9 @@ const PuzzleCell: FC<PuzzleCellProps> = (props: PuzzleCellProps) => {
 
     const classNames = clsx(
         props.className,
-        "bg-center bg-contain",
+        "bg-no-repeat bg-center bg-80%",
         bgClassName()
-        );
+    );
 
     const style: CSSProperties = {
         backgroundColor: cellId && cellMap[cellId] || "none"
@@ -30,8 +31,7 @@ const PuzzleCell: FC<PuzzleCellProps> = (props: PuzzleCellProps) => {
 
     return (
         <td className={classNames}
-            onClick={onClick}
-            onAuxClick={onAuxClick}
+            {...eventsMap}
             id={cellId}
             style={style}/>
     );

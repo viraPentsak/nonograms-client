@@ -1,7 +1,7 @@
 import {CSSProperties, FC, MouseEvent, useState} from "react";
 import {I_Puzzle} from "../../interfaces/index";
 import {usePuzzle} from "../../hooks/usePuzzle";
-import PuzzleCell from "./PuzzleCell";
+import PuzzleCell, {PuzzleCellProps} from "./PuzzleCell";
 import withTable from "../../hocs/withTable";
 import {CellFill, CellMap} from "../../types/index";
 
@@ -25,31 +25,39 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
         emptyCells: "show"
     }
 
-    const setCellMapValue = (event: MouseEvent, value: CellFill): void => {
+    const getCellId = (event: MouseEvent): string => {
         const target = event.target as Element;
-        const id = target.id;
-        if (!id) return;
+        return target.id;
+    }
+
+    const setCellMapValue = (id: string, value: CellFill): void => {
         let updatedCellMap = {
             ...cellMap
         };
         updatedCellMap[id] = cellMap[id] === value ? undefined : value;
-
         setCellMap(updatedCellMap);
     }
 
-    const onClickHandler = (event: MouseEvent) => {
-        setCellMapValue(event, cellFill)
+    const updateCell = (event: MouseEvent, value: CellFill): void => {
+        const id = getCellId(event);
+        setCellMapValue(id, value);
     }
-
-    const onAuxClickHandler = (event: MouseEvent) => {
-        setCellMapValue(event, "none");
-    };
 
     const onContextMenuHandler = (evt: MouseEvent) => {
         evt.preventDefault();
+    };
+
+    const cellEventsMap = {
+        onClick: (event: MouseEvent) => {
+            updateCell(event, cellFill)
+        },
+
+        onAuxClick: (event: MouseEvent) => {
+            updateCell(event, "none");
+        }
     }
 
-    const TableBody = withTable(PuzzleCell, {cols: width, rows: height});
+    const TableBody = withTable<PuzzleCellProps>(PuzzleCell, {cols: width, rows: height});
 
     return (
         <table cellPadding={cellSize / 2}
@@ -58,8 +66,7 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
             <tbody onContextMenu={onContextMenuHandler}>
             <TableBody className="border border-slate-500 "
                        cellMap={cellMap}
-                       onAuxClick={onAuxClickHandler}
-                       onClick={onClickHandler}/>
+                       eventsMap={cellEventsMap}/>
             </tbody>
         </table>
     );

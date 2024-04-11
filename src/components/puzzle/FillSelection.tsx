@@ -17,7 +17,7 @@ const FillSelection:FC<FillSelectionProps> = (props) => {
 
     const onClickHandler = () => setFill("none");
 
-    const itemClassNames = "w-24 h-10 border-2 rounded-md  border-slate-500 mx-1  bg-repeat"
+    const itemClassNames = "w-24 h-10 border-2 rounded-md  border-slate-500 mx-1  bg-repeat  cursor-pointer"
     const defaultStyling: CSSProperties = {
         backgroundImage: `url(${crossIcon})`,
         backgroundSize: "12px"

@@ -4,8 +4,11 @@ interface WithTableProps {
     rows: number,
     cols: number
 }
+
 //todo:maybe better naming, we are making cells only
-function withTable(WrappedComponent: React.ComponentType<any>,  tableProps: WithTableProps) {
+function withTable<P extends object>(
+    WrappedComponent: React.ComponentType<P>, tableProps: WithTableProps
+): React.FC<P> {
     const {rows, cols} = tableProps;
 
     return (props: { [key: string]: any }) => {
@@ -16,7 +19,7 @@ function withTable(WrappedComponent: React.ComponentType<any>,  tableProps: With
                 for (let col = 0; col < cols; col++) {
                     const cellId = `row:${row}|col:${col}`;
                     rows.push(
-                        <WrappedComponent  {...props} key={cellId} cellId={cellId}/>
+                        <WrappedComponent  {...props as P} key={cellId} cellId={cellId}/>
                     )
                 }
 
