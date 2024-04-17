@@ -1,4 +1,4 @@
-import {CSSProperties, FC, MouseEvent, useState} from "react";
+import {CSSProperties, FC, MouseEvent} from "react";
 import {I_Puzzle} from "../../interfaces/index";
 import {usePuzzle} from "../../hooks/usePuzzle";
 import PuzzleCell, {PuzzleCellProps} from "./PuzzleCell";
@@ -7,21 +7,21 @@ import {CellFill, CellMap} from "../../types/index";
 
 interface I_PuzzleBodyProps {
     cellSize: number,
-    cellFill: CellFill
+    cellFill: CellFill,
+    cellMap: CellMap,
+    setCellMap: Function
 }
 
 const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
-    const {cellSize, cellFill} = props;
+    const {cellSize, cellFill, cellMap, setCellMap} = props;
     const puzzle = usePuzzle();
     if (!puzzle) return;
 
-    //todo:get CellMap from saved solution
-    const [cellMap, setCellMap] = useState<CellMap>({});
 
     const {size}: I_Puzzle = puzzle;
     const {width, height} = size;
     const styles: CSSProperties = {
-        width: `${width * cellSize}px`,
+        width: `${width * cellSize * 2}px`,
         emptyCells: "show"
     }
 
@@ -60,7 +60,7 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
     const TableBody = withTable<PuzzleCellProps>(PuzzleCell, {cols: width, rows: height});
 
     return (
-        <table cellPadding={cellSize / 2}
+        <table cellPadding={cellSize}
                align="center"
                className="border border-slate-500 text-none table-fixed" style={styles}>
             <tbody onContextMenu={onContextMenuHandler}>

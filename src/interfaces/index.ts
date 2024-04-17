@@ -1,5 +1,9 @@
 import {Color} from "../types/index";
 
+interface I_HasId{
+    id: string,
+}
+
 export interface I_PuzzleLegend {
     size: { width: number, height: number },
     legend: {
@@ -8,7 +12,6 @@ export interface I_PuzzleLegend {
     }
 }
 
-export interface I_Puzzle extends I_PuzzleLegend {
-    id: string,
+export interface I_Puzzle extends I_PuzzleLegend, I_HasId {
     colors: Color[]
 }
