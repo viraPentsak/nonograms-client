@@ -5,7 +5,9 @@
   "type": "module",
   "scripts": {
     "server": "json-server --watch db.json",
+    "watch": "tsc -w",
     "dev": "vite",
+    "start": "concurrently \"npm:server\" \"npm:watch\" \"npm:dev\"",
     "build": "tsc && vite build",
     "lint": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
@@ -14,6 +16,7 @@
     "axios": "^1.6.8",
     "classnames": "^2.5.1",
     "clsx": "^2.1.0",
+    "concurrently": "^8.2.2",
     "json-server": "^1.0.0-alpha.23",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
