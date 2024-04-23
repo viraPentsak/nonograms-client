@@ -12,6 +12,7 @@ const Button: React.FC = (props: ButtonProps) => {
         variant = "primary",
         children,
         className,
+        Component = 'button',
         ...restProps
     } = props;
 
@@ -27,9 +28,9 @@ const Button: React.FC = (props: ButtonProps) => {
     ));
 
     return (
-        <button className={stylingClassNames} {...restProps}>
+        <Component className={stylingClassNames} {...restProps}>
             {children}
-        </button>
+        </Component>
     );
 };
 

@@ -1,6 +1,6 @@
 import {CSSProperties, FC, MouseEvent} from "react";
 import {I_Puzzle} from "../../interfaces/index";
-import {usePuzzle} from "../../hooks/usePuzzle";
+import {usePuzzleByRoute} from "../../hooks/usePuzzle";
 import PuzzleCell, {PuzzleCellProps} from "./PuzzleCell";
 import withTable from "../../hocs/withTable";
 import {CellFill, CellMap} from "../../types/index";
@@ -14,7 +14,7 @@ interface I_PuzzleBodyProps {
 
 const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
     const {cellSize, cellFill, cellMap, setCellMap} = props;
-    const puzzle = usePuzzle();
+    const {puzzle} = usePuzzleByRoute();
     if (!puzzle) return;
 
 

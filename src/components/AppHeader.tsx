@@ -18,15 +18,17 @@ after:absolute
 after:inset-x-0
 after:bottom-0`;
 
+//todo:redo puzzle links into puzzle selection on home page
 const links = [
-    {url: "/puzzle/id1", text: "Puzzle"},
+    {url: "/puzzle/id1", text: "Puzzle 1"},
+    {url: "/puzzle/id2", text: "Puzzle 2"},
     {url: "/", text: "Home"},
 ];
 
 //Todo: maybe no need in menu
 const AppHeader = () => {
     const linkClassName = useCallback(({isActive}: { isActive: boolean }): string | undefined => {
-        return twMerge(defaultClassName, classnames({"bg-slate-400 pointer-events-none": isActive}));
+        return twMerge(defaultClassName, classnames({"hidden": isActive}));
     },[]);
 
 

@@ -1,6 +1,6 @@
 import {Color} from "../types/index";
 
-interface I_HasId{
+export interface I_HasId{
     id: string,
 }
 

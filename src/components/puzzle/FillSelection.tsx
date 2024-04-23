@@ -1,17 +1,15 @@
 import {ReactNode, CSSProperties, FC} from "react";
 import {CellFill} from "../../types/index";
 import {crossIcon} from "./../../assets";
-import {usePuzzle} from "../../hooks/usePuzzle";
+import {usePuzzleByRoute} from "../../hooks/usePuzzle";
 
 interface FillSelectionProps {
     selectedFill: CellFill,
     setFill: (cellFill: CellFill) => void
 }
 
-const FillSelection:FC<FillSelectionProps> = (props) => {
-    const puzzle = usePuzzle();
-    if (!puzzle) return;
-
+const FillSelection: FC<FillSelectionProps> = (props) => {
+    const {puzzle} = usePuzzleByRoute();
     const {colors} = puzzle;
     const {setFill} = props;
 
