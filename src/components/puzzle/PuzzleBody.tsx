@@ -1,4 +1,4 @@
-import {CSSProperties, FC, MouseEvent} from "react";
+import {FC, MouseEvent} from "react";
 import {I_Puzzle, I_PuzzleCell} from "../../interfaces/index";
 import {usePuzzleByRoute} from "../../hooks/usePuzzle";
 import PuzzleCell from "./PuzzleCell";
@@ -20,13 +20,9 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
 
     const {size}: I_Puzzle = puzzle;
     const {width, height} = size;
-    const styles: CSSProperties = {
-        width: `${width * cellSize * 2}px`,
-        emptyCells: "show"
-    }
 
     const getCellId = (event: MouseEvent): string => {
-        const target = event.target as Element;
+        const target = event.currentTarget as Element;
         return target.id;
     }
 
@@ -49,7 +45,6 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
 
     const cellEventsMap = {
         onClick: (event: MouseEvent) => {
-            if (!cellFill) return;
             updateCell(event, cellFill)
         },
 
@@ -63,7 +58,7 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
     return (
         <table cellPadding={cellSize}
                align="center"
-               className="border border-slate-500 text-none table-fixed" style={styles}>
+               className="border border-slate-500 table-fixed m-0">
             <tbody onContextMenu={onContextMenuHandler}>
             <TableBody className="border border-slate-500 "
                        cellMap={cellMap}
