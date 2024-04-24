@@ -1,17 +1,40 @@
-import {Color} from "../types/index";
+import {CellMap, Color, LegendType} from "../types/index";
+import React from "react";
 
-export interface I_HasId{
+export interface I_HasId {
     id: string,
 }
 
+export interface I_TableStructure{
+    rows: number,
+    cols: number
+}
+
+type LegendFields = Record<LegendType, number[][]>
+type LegendSizeFields = Record<LegendType, I_TableStructure>
+
 export interface I_PuzzleLegend {
     size: { width: number, height: number },
-    legend: {
-        horizontal: number[][],
-        vertical: number[][]
-    }
+    legend: LegendFields,
+    legendSize: LegendSizeFields
 }
 
 export interface I_Puzzle extends I_PuzzleLegend, I_HasId {
     colors: Color[]
+}
+
+export interface I_PuzzleCell extends React.TdHTMLAttributes<HTMLTableCellElement> {
+    cellId?: string,
+    cellMap: CellMap,
+    eventsMap?: {
+        [key: string]: React.MouseEventHandler<HTMLTableCellElement>
+    }
+}
+
+export interface I_PuzzleCell extends React.TdHTMLAttributes<HTMLTableCellElement> {
+    cellId?: string,
+    cellMap: CellMap,
+    eventsMap?: {
+        [key: string]: React.MouseEventHandler<HTMLTableCellElement>
+    }
 }

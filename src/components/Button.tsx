@@ -1,22 +1,22 @@
 import React from "react";
-import {twMerge} from "tailwind-merge";
-import classnames from "classnames";
+import clsx from "clsx";
 import type {Button} from "../types/index";
 
-interface ButtonProps {
-    variant: Button
+interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    variant?: Button,
+    children?: React.ReactNode,
+    className?: string
 }
 
-const Button: React.FC = (props: ButtonProps) => {
+const Button: React.FC<ButtonProps> = (props) => {
     const {
         variant = "primary",
         children,
         className,
-        Component = 'button',
         ...restProps
     } = props;
 
-    const stylingClassNames = twMerge(classnames(
+    const stylingClassNames = clsx(
         "px-3 py-2 border border-2 transition",
         "border-purple-700 hover:bg-purple-700 hover:bg-purple-800 hover:border-purple-900 hover:text-white",
         {
@@ -25,12 +25,12 @@ const Button: React.FC = (props: ButtonProps) => {
             "border-rose-700 hover:bg-rose-700 hover:bg-rose-800": variant === "danger",
         },
         className
-    ));
+    );
 
     return (
-        <Component className={stylingClassNames} {...restProps}>
+        <button className={stylingClassNames} {...restProps}>
             {children}
-        </Component>
+        </button>
     );
 };
 

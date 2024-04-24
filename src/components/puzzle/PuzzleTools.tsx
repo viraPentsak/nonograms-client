@@ -1,12 +1,14 @@
-import {Button} from "./../";
+import Button from "./../Button";
+import React from "react";
+
 
 interface PuzzleToolsProps {
-    onIncrease: Function,
-    onDecrease: Function,
-    onReset: Function
+    onIncrease: React.MouseEventHandler,
+    onDecrease: React.MouseEventHandler,
+    onReset: React.MouseEventHandler
 }
 
-const PuzzleTools = (props: PuzzleToolsProps) => {
+const PuzzleTools:React.FC<PuzzleToolsProps> = (props ) => {
     return (
         <div className="flex flex-row gap-3 justify-center">
             <Button onClick={props.onIncrease}>Increase size</Button>

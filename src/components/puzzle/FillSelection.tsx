@@ -10,6 +10,8 @@ interface FillSelectionProps {
 
 const FillSelection: FC<FillSelectionProps> = (props) => {
     const {puzzle} = usePuzzleByRoute();
+    if (!puzzle) return null;
+
     const {colors} = puzzle;
     const {setFill} = props;
 

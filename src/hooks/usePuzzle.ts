@@ -5,7 +5,7 @@ import {I_Puzzle} from "../interfaces/index";
 import {useSlugId} from "./useSlugId";
 
 const puzzleFetcher: Fetcher<I_Puzzle, string> = async (url: string) => {
-    const res = await axios.get(url);
+    const res = await axios.get<I_Puzzle>(url);
     return res.data;
 }
 
@@ -26,5 +26,12 @@ export const usePuzzleByRoute = () => {
     if (!id) {
         throw new Error("Not a puzzle route!");
     }
-    return usePuzzle(id);
+
+    const puzzleData = usePuzzle(id);
+
+    if (!puzzleData) {
+        throw new Error('Puzzle cannot be fetched!');
+    }
+
+    return puzzleData;
 }

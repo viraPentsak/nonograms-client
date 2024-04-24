@@ -1,8 +1,7 @@
 import React from "react";
+import {I_TableStructure} from "../interfaces/index";
 
-interface WithTableProps {
-    rows: number,
-    cols: number
+interface WithTableProps extends I_TableStructure{
 }
 
 //todo:maybe better naming, we are making cells only

@@ -1,8 +1,7 @@
 import {useCallback} from "react";
 import {NavLink} from "react-router-dom";
-import {twMerge} from "tailwind-merge";
-import classnames from "classnames";
 import {ReactNode} from "react";
+import {clsx} from "clsx";
 
 const defaultClassName = `
 relative
@@ -28,7 +27,7 @@ const links = [
 //Todo: maybe no need in menu
 const AppHeader = () => {
     const linkClassName = useCallback(({isActive}: { isActive: boolean }): string | undefined => {
-        return twMerge(defaultClassName, classnames({"hidden": isActive}));
+        return clsx(defaultClassName, {"hidden": isActive});
     },[]);
 
 

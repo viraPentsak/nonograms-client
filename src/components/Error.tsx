@@ -1,8 +1,10 @@
+import React from "react";
+
 interface ErrorProps {
     error: unknown
 }
 
-const Error = ({error}: ErrorProps) => {
+const ErrorComponent: React.FC<ErrorProps> = ({error}) => {
     let message = error instanceof Error
         ? error.message :
         "Error occurred. Please try again later or contact the support.";
@@ -14,4 +16,4 @@ const Error = ({error}: ErrorProps) => {
     );
 };
 
-export default Error;
+export default ErrorComponent;

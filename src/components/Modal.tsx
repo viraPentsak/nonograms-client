@@ -1,12 +1,13 @@
 import ReactDOM from "react-dom";
-import React, {ReactNode} from "react";
+import React, {MouseEventHandler, ReactNode} from "react";
 
 interface ModalProps {
-    onClose: Function,
-    actionBar: ReactNode
+    onClose: MouseEventHandler<HTMLDivElement>,
+    actionBar: ReactNode,
+    children?: ReactNode
 }
 
-const Modal: React.FC = ({children, onClose, actionBar}: ModalProps) => {
+const Modal: React.FC<ModalProps> = ({children, onClose, actionBar}) => {
     const modalContainer = document.querySelector("#modal-container");
     if (!modalContainer) return null;
 

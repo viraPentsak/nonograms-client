@@ -1,15 +1,12 @@
-import React, {FC, CSSProperties} from "react";
+import {FC, CSSProperties} from "react";
 import clsx from "clsx";
-import {CellMap} from "../../types/index";
+import {I_PuzzleCell} from "../../interfaces";
 
-export interface PuzzleCellProps extends React.TdHTMLAttributes<HTMLTableCellElement> {
-    cellId?: string,
+interface PuzzleCellProps extends I_PuzzleCell{
     className?: string,
-    cellMap: CellMap,
-    eventsMap?: { [key: keyof HTMLElementEventMap]: Function }
 }
 
-const PuzzleCell: FC<PuzzleCellProps> = (props: PuzzleCellProps) => {
+const PuzzleCell: FC<PuzzleCellProps> = (props) => {
     const {cellId, cellMap, eventsMap} = props;
 
     const bgClassName = () => {

@@ -1,7 +1,7 @@
 import {CSSProperties, FC, MouseEvent} from "react";
-import {I_Puzzle} from "../../interfaces/index";
+import {I_Puzzle, I_PuzzleCell} from "../../interfaces/index";
 import {usePuzzleByRoute} from "../../hooks/usePuzzle";
-import PuzzleCell, {PuzzleCellProps} from "./PuzzleCell";
+import PuzzleCell from "./PuzzleCell";
 import withTable from "../../hocs/withTable";
 import {CellFill, CellMap} from "../../types/index";
 
@@ -49,6 +49,7 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
 
     const cellEventsMap = {
         onClick: (event: MouseEvent) => {
+            if (!cellFill) return;
             updateCell(event, cellFill)
         },
 
@@ -57,7 +58,7 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
         }
     }
 
-    const TableBody = withTable<PuzzleCellProps>(PuzzleCell, {cols: width, rows: height});
+    const TableBody = withTable<I_PuzzleCell>(PuzzleCell, {cols: width, rows: height});
 
     return (
         <table cellPadding={cellSize}
