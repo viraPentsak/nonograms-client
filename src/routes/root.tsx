@@ -3,7 +3,7 @@ import {Outlet} from "react-router-dom";
 
 const RootRoute = () => {
     return (
-        <div className="bg-slate-100">
+        <div className="bg-slate-100 min-h-dvh">
             <div className="container h-full mx-auto xl ">
                 <AppHeader/>
                 <Outlet/>

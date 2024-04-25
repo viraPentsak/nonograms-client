@@ -1,11 +1,11 @@
 import {useState} from "react";
 import {CellFill, CellMap} from "../../types/index";
-import {Button, Modal} from "./../";
 import FillSelection from "./FillSelection";
 import FillSwatch from "./FillSwatch";
 import PuzzleBody from "./PuzzleBody";
 import PuzzleTools from "./PuzzleTools";
 import PuzzleLegend from "./PuzzleLegend";
+import PuzzleModal from "./PuzzleModal";
 
 const Puzzle = () => {
     //todo: select first color from array
@@ -69,15 +69,9 @@ const Puzzle = () => {
             </table>
             <div className="mb-4"/>
             <PuzzleTools {...toolsHandlers}/>
-            {showResetModal && (
-                <Modal onClose={closeModalHandler}
-                       actionBar={(
-                           <div className=" pt-4 flex flex-row gap-2 justify-center">
-                               <Button onClick={resetHandler} variant="danger">Yes, reset!</Button>
-                               <Button onClick={closeModalHandler} variant="secondary">Cancel</Button>
-                           </div>)}>
-                    <h2 className="text-xl  font-bold  text-center">Are you sure you want to reset the puzzle?</h2>
-                </Modal>)}
+            {showResetModal && <PuzzleModal onReset={resetHandler}
+                                            onCancel={closeModalHandler}
+                                            onClose={closeModalHandler}/>}
         </>
     );
 }

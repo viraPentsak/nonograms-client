@@ -1,9 +1,9 @@
 import React from "react";
 import clsx from "clsx";
-import type {Button} from "../types/index";
+import type {ButtonType} from "../types/index";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-    variant?: Button,
+    variant?: ButtonType,
     children?: React.ReactNode,
     className?: string
 }
