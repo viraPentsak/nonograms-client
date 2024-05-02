@@ -1,4 +1,4 @@
-import {FC, CSSProperties} from "react";
+import React, {FC, CSSProperties, useCallback} from "react";
 import clsx from "clsx";
 import {I_PuzzleCell} from "../../interfaces";
 
@@ -8,24 +8,39 @@ interface PuzzleCellProps extends I_PuzzleCell {
 }
 
 const PuzzleCell: FC<PuzzleCellProps> = (props) => {
-    const {cellId, cellMap, eventsMap, data} = props;
+    const {cellMap, eventsMap, data, row = 1, col = -1} = props;
+    const cellMapValue = cellMap[row] ? cellMap[row][col] : undefined;
+
+    const handleMouseDown = useCallback(
+        (event: React.MouseEvent<HTMLTableCellElement>) => {
+            if (!eventsMap || !("onMouseDown" in eventsMap)) return
+
+            return eventsMap.onMouseDown(row, col, event);
+        }, [row, col]);
+
+    const handleMouseUp = useCallback(
+        (event: React.MouseEvent<HTMLTableCellElement>) => {
+            if (!eventsMap || !("onMouseUp" in eventsMap)) return
+
+            return eventsMap.onMouseUp(row, col, event)
+        }, [row, col]);
 
     const classNames = clsx(
         props.className,
         "relative",
         "absolute-centered-cell",
         "bg-no-repeat bg-center bg-80%",
-        {"bg-cross": cellId && (cellMap[cellId] === "none")}
+        {"bg-cross": (cellMapValue === "none")}
     );
 
     const style: CSSProperties = {
-        backgroundColor: cellId && cellMap[cellId] || "none"
+        backgroundColor: cellMapValue || "none"
     };
 
     return (
         <td className={classNames}
-            {...eventsMap}
-            id={cellId}
+            onMouseDown={handleMouseDown}
+            onMouseUp={handleMouseUp}
             style={style}>
             <span className="text-sx">{data}</span>
         </td>

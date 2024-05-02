@@ -1,4 +1,4 @@
-import {ReactNode, CSSProperties, FC} from "react";
+import {ReactNode, CSSProperties, FC, useEffect} from "react";
 import {CellFill} from "../../types/index";
 import {crossIcon} from "./../../assets";
 import {usePuzzleByRoute} from "../../hooks/usePuzzle";
@@ -9,11 +9,15 @@ interface FillSelectionProps {
 }
 
 const FillSelection: FC<FillSelectionProps> = (props) => {
-    const {puzzle} = usePuzzleByRoute();
+    const {puzzle, isLoading} = usePuzzleByRoute();
     if (!puzzle) return null;
 
     const {colors} = puzzle;
     const {setFill} = props;
+
+    useEffect(()=>{
+        setFill(colors[0])
+    },[isLoading])
 
     const onClickHandler = () => setFill("none");
 
@@ -35,6 +39,7 @@ const FillSelection: FC<FillSelectionProps> = (props) => {
             <h3 className="text-xl text-center py-2">Select color:</h3>
             <div className="flex flex-row justify-center pb-4 text-slate-50">
                 {fillsRendered}
+                {/*"None" color selection*/}
                 <div className={itemClassNames}
                      onClick={onClickHandler}
                      style={defaultStyling}

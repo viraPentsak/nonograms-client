@@ -54,7 +54,7 @@ const PuzzleLegend = ({children, type, cellSize}: PuzzleLegendProps) => {
             <table className="table-fixed bg-slate-200" cellPadding={cellSize}>
                 <tbody>
                 {children}
-                <TableBody cellMap={{}}
+                <TableBody cellMap={[]}
                            className={className}/>
                 </tbody>
 

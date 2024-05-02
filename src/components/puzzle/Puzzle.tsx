@@ -13,7 +13,7 @@ const Puzzle = () => {
     const [cellSize, setCellSize] = useState<number>(12);
 
     //todo:get CellMap from saved solution
-    const [cellMap, setCellMap] = useState<CellMap>({});
+    const [cellMap, setCellMap] = useState<CellMap>([]);
 
     const [showResetModal, setResetModal] = useState<boolean>(false);
 
@@ -31,13 +31,14 @@ const Puzzle = () => {
     };
 
     const closeModalHandler = () => setResetModal(false);
+
     const resetHandler = () => {
-        setCellMap({});
+        setCellMap([]);
         setResetModal(false)
-    }
+    };
 
     return (
-        <>
+        <div className="puzzle">
             <FillSelection selectedFill={selectedFill} setFill={setFill}/>
 
             <table align="center" className="table-fixed" cellPadding={0}>
@@ -61,7 +62,7 @@ const Puzzle = () => {
                         <PuzzleBody cellSize={cellSize}
                                     cellFill={selectedFill}
                                     cellMap={cellMap}
-                                    setCellMap={setCellMap}
+                                    updateCellMap={setCellMap}
                         />
                     </td>
                 </tr>
@@ -72,7 +73,7 @@ const Puzzle = () => {
             {showResetModal && <PuzzleModal onReset={resetHandler}
                                             onCancel={closeModalHandler}
                                             onClose={closeModalHandler}/>}
-        </>
+        </div>
     );
 }
 

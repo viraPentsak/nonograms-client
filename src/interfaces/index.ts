@@ -5,7 +5,7 @@ export interface I_HasId {
     id: string,
 }
 
-export interface I_TableStructure{
+export interface I_TableStructure {
     rows: number,
     cols: number
 }
@@ -24,17 +24,11 @@ export interface I_Puzzle extends I_PuzzleLegend, I_HasId {
 }
 
 export interface I_PuzzleCell extends React.TdHTMLAttributes<HTMLTableCellElement> {
-    cellId?: string,
+    row?: number,
+    col?: number,
+    prefix?: string,
     cellMap: CellMap,
     eventsMap?: {
-        [key: string]: React.MouseEventHandler<HTMLTableCellElement>
-    }
-}
-
-export interface I_PuzzleCell extends React.TdHTMLAttributes<HTMLTableCellElement> {
-    cellId?: string,
-    cellMap: CellMap,
-    eventsMap?: {
-        [key: string]: React.MouseEventHandler<HTMLTableCellElement>
+        [key: string]: Function
     }
 }
