@@ -1,8 +1,8 @@
 import {ReactNode, useCallback} from "react";
-import {usePuzzleByRoute} from "../../hooks/usePuzzle";
-import {LegendType} from "../../types/index";
+import {usePuzzleByRoute} from "@/hooks/usePuzzle";
+import {LegendType} from "@/types";
 import withTable from "../../hocs/withTable";
-import {I_PuzzleCell} from "../../interfaces/index";
+import {I_PuzzleCell} from "@/interfaces";
 import PuzzleCell from "./PuzzleCell";
 import clsx from "clsx";
 
@@ -46,8 +46,8 @@ const PuzzleLegend = ({children, type, cellSize}: PuzzleLegendProps) => {
 
         const className = clsx(
             "border border-slate-300 text-xs text-center",
-            {"border-x-slate-500": type === "horizontal"},
-            {"border-y-slate-500": type === "vertical"}
+            {["border-x-slate-500"]: type === "horizontal"},
+            {["border-y-slate-500"]: type === "vertical"}
         )
 
         return (

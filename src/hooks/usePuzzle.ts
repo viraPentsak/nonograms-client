@@ -1,7 +1,7 @@
-import useSWR, {Fetcher} from "swr";
+import useSWR, {Fetcher, SWRResponse} from "swr";
 import axios from "axios";
-import {PUZZLES_URL} from "../constants/index";
-import {I_Puzzle} from "../interfaces/index";
+import {I_Puzzle} from "@/interfaces";
+import {PUZZLES_URL} from "@/constants";
 import {useSlugId} from "./useSlugId";
 
 const puzzleFetcher: Fetcher<I_Puzzle, string> = async (url: string) => {
@@ -9,7 +9,11 @@ const puzzleFetcher: Fetcher<I_Puzzle, string> = async (url: string) => {
     return res.data;
 }
 
-export const usePuzzle = (id: string | undefined) => {
+interface usePuzzleProps extends Pick<SWRResponse, "error" | "isLoading"> {
+    puzzle: I_Puzzle | undefined,
+}
+
+export const usePuzzle = (id: string | undefined): usePuzzleProps => {
 
     const {data, error, isLoading} = useSWR(`${PUZZLES_URL}${id}`, puzzleFetcher);
 
@@ -27,11 +31,5 @@ export const usePuzzleByRoute = () => {
         throw new Error("Not a puzzle route!");
     }
 
-    const puzzleData = usePuzzle(id);
-
-    if (!puzzleData) {
-        throw new Error('Puzzle cannot be fetched!');
-    }
-
-    return puzzleData;
+    return usePuzzle(id);
 }

@@ -1,6 +1,6 @@
 import React, {FC, CSSProperties, useCallback} from "react";
 import clsx from "clsx";
-import {I_PuzzleCell} from "../../interfaces";
+import {I_PuzzleCell} from "@/interfaces";
 
 interface PuzzleCellProps extends I_PuzzleCell {
     className?: string,
@@ -30,7 +30,7 @@ const PuzzleCell: FC<PuzzleCellProps> = (props) => {
         "relative",
         "absolute-centered-cell",
         "bg-no-repeat bg-center bg-80%",
-        {"bg-cross": (cellMapValue === "none")}
+        {["bg-cross"]: (cellMapValue === "none")}
     );
 
     const style: CSSProperties = {

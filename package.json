@@ -13,6 +13,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/node": "^20.14.0",
     "axios": "^1.6.8",
     "clsx": "^2.1.0",
     "concurrently": "^8.2.2",

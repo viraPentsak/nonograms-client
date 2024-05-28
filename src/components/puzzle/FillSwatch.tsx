@@ -1,6 +1,6 @@
 import React, {CSSProperties} from "react";
-import {CellFill} from "../../types/index";
-import {crossIcon} from "./../../assets";
+import {CellFill} from "@/types";
+import {crossIcon} from "@/assets";
 
 interface FillSwatchProps {
     selectedFill: CellFill

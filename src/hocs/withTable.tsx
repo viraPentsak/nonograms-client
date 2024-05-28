@@ -1,5 +1,5 @@
 import React from "react";
-import {I_TableStructure} from "../interfaces/index";
+import {I_TableStructure} from "@/interfaces";
 
 interface WithTableProps extends I_TableStructure {
     reverseRows?: boolean,

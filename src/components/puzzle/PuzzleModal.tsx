@@ -1,5 +1,5 @@
 import React, {MouseEventHandler} from "react";
-import {Button, Modal} from "./../index";
+import {Button, Modal} from "@/components";
 
 interface PuzzleModalProps {
     onClose: MouseEventHandler<HTMLDivElement>,

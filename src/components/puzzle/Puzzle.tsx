@@ -1,5 +1,5 @@
 import {useState} from "react";
-import {CellFill, CellMap} from "../../types/index";
+import {CellFill, CellMap} from "@/types";
 import FillSelection from "./FillSelection";
 import FillSwatch from "./FillSwatch";
 import PuzzleBody from "./PuzzleBody";

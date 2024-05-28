@@ -1,10 +1,10 @@
 import React, {FC, useRef} from "react";
-import {I_Puzzle, I_PuzzleCell} from "../../interfaces/index";
-import {usePuzzleByRoute} from "../../hooks/usePuzzle";
+import {I_Puzzle, I_PuzzleCell} from "@/interfaces";
+import {CellFill, CellMap} from "@/types";
+import {usePuzzleByRoute} from "@/hooks/usePuzzle.ts";
 import PuzzleCell from "./PuzzleCell";
-import withTable from "../../hocs/withTable";
-import {CellFill, CellMap} from "../../types/index";
-import {getNumbersRange} from "../helpers/index";
+import withTable from "@/hocs/withTable";
+import {getNumbersRange} from "@/helpers";
 
 interface I_PuzzleBodyProps {
     cellSize: number,
