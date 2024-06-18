@@ -1,8 +1,8 @@
 import {ReactNode, useCallback} from "react";
 import {usePuzzleByRoute} from "@/hooks/usePuzzle";
-import {LegendType} from "@/types";
+import {LegendType, LegendField} from "@/types";
 import withTable from "../../hocs/withTable";
-import {I_PuzzleCell} from "@/interfaces";
+import {I_PuzzleCell,} from "@/interfaces";
 import PuzzleCell from "./PuzzleCell";
 import clsx from "clsx";
 
@@ -15,10 +15,12 @@ interface PuzzleLegendProps {
 const PuzzleLegend = ({children, type, cellSize}: PuzzleLegendProps) => {
         const {puzzle} = usePuzzleByRoute();
         if (!puzzle) return null;
-        const legend = puzzle.legend[type];
+        const legend: number[][] = puzzle.legend[type];
         const legendSize = puzzle.legendSize[type];
 
-        const optimizeHorizontalData = useCallback(() => {
+        const getLegendData = useCallback((): LegendField => {
+            if (type !== "horizontal") return legend
+
             let rowArray = []
             for (let r = 0; r < legendSize.rows; r++) {
                 let newRow = legend.map(item => {
@@ -28,9 +30,9 @@ const PuzzleLegend = ({children, type, cellSize}: PuzzleLegendProps) => {
             }
             return rowArray;
             //todo: update if cell map changes
-        }, []);
+        }, [type, legend, legendSize]);
 
-        const optimizedData = (type === "horizontal") ? optimizeHorizontalData() : legend;
+        const optimizedData = getLegendData();
 
         const tableProps = {
             ...legendSize,
@@ -51,7 +53,7 @@ const PuzzleLegend = ({children, type, cellSize}: PuzzleLegendProps) => {
         )
 
         return (
-            <table className="table-fixed bg-slate-200" cellPadding={cellSize}>
+            <table className="table-fixed bg-slate-200 font-bold" cellPadding={cellSize}>
                 <tbody>
                 {children}
                 <TableBody cellMap={[]}

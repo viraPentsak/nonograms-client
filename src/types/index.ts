@@ -6,3 +6,5 @@ export type CellFill = Color | "none" | undefined;
 export type CellMap = CellFill[][] | undefined[][];
 export type ButtonType = "primary" | "secondary" | "success" | "warning" | "danger";
 export type LegendType = 'vertical' | 'horizontal';
+export type LegendField = number[][];
+export type Solution = CellFill[][];

@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import {CellFill, CellMap} from "@/types";
 import FillSelection from "./FillSelection";
 import FillSwatch from "./FillSwatch";
@@ -6,9 +6,12 @@ import PuzzleBody from "./PuzzleBody";
 import PuzzleTools from "./PuzzleTools";
 import PuzzleLegend from "./PuzzleLegend";
 import PuzzleModal from "./PuzzleModal";
+import {useLocation, useParams} from "react-router-dom";
+import {useSlugId} from "../../hooks/useSlugId";
+import {useSolution, useUserSolution} from "../../hooks/useSolution";
 
 const Puzzle = () => {
-    //todo: select first color from array
+
     const [selectedFill, setFill] = useState<CellFill>("none");
     const [cellSize, setCellSize] = useState<number>(12);
 
@@ -16,6 +19,22 @@ const Puzzle = () => {
     const [cellMap, setCellMap] = useState<CellMap>([]);
 
     const [showResetModal, setResetModal] = useState<boolean>(false);
+
+    const id = useSlugId();
+
+    const {solution, isLoading} = useUserSolution()
+
+    useEffect(() => {
+        setCellMap([])
+    }, [id]);
+
+    useEffect(()=>{
+        console.log(solution)
+        if(solution){
+            setCellMap(solution)
+        }
+    },[solution]);
+
 
     const toolsHandlers = {
         onIncrease: () => {

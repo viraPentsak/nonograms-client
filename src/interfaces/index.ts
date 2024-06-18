@@ -1,4 +1,4 @@
-import {CellMap, Color, LegendType} from "../types/index";
+import {CellMap, Color, LegendType, LegendField} from "@/types";
 import React from "react";
 
 export interface I_HasId {
@@ -10,7 +10,7 @@ export interface I_TableStructure {
     cols: number
 }
 
-type LegendFields = Record<LegendType, number[][]>
+type LegendFields = Record<LegendType, LegendField>
 type LegendSizeFields = Record<LegendType, I_TableStructure>
 
 export interface I_PuzzleLegend {
