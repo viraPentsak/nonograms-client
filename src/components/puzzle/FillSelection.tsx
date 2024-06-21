@@ -1,23 +1,15 @@
-import {ReactNode, CSSProperties, FC, useEffect} from "react";
+import {ReactNode, CSSProperties, FC} from "react";
 import {CellFill} from "@/types";
 import {crossIcon} from "@/assets";
-import {usePuzzleByRoute} from "@/hooks/usePuzzle.ts";
 
 interface FillSelectionProps {
+    colors: CellFill[],
     selectedFill: CellFill,
     setFill: (cellFill: CellFill) => void
 }
 
 const FillSelection: FC<FillSelectionProps> = (props) => {
-    const {puzzle, isLoading} = usePuzzleByRoute();
-    if (!puzzle) return null;
-
-    const {colors} = puzzle;
-    const {setFill} = props;
-
-    useEffect(() => {
-        setFill(colors[0])
-    }, [isLoading])
+    const {setFill, colors} = props;
 
     const onClickHandler = () => setFill("none");
 

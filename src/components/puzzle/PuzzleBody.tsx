@@ -1,17 +1,10 @@
 import React, {FC, useRef} from "react";
 import {I_Puzzle, I_PuzzleCell} from "@/interfaces";
 import {CellFill, CellMap} from "@/types";
-import {usePuzzleByRoute} from "@/hooks/usePuzzle.ts";
 import PuzzleCell from "./PuzzleCell";
 import withTable from "@/hocs/withTable";
 import {getNumbersRange} from "@/helpers";
 
-interface I_PuzzleBodyProps {
-    cellSize: number,
-    cellFill: CellFill,
-    cellMap: CellMap,
-    updateCellMap: Function
-}
 
 const copyCellMap = (array: CellMap): CellMap => {
     return array.map((item) => {
@@ -27,10 +20,22 @@ interface DragStartRef {
     startElement: EventTarget | null
 }
 
+interface I_PuzzleBodyProps {
+    cellSize: number,
+    cellFill: CellFill,
+    cellMap: CellMap,
+    updateCellMap: ((map: CellMap) => void),
+    puzzle: I_Puzzle
+}
+
 const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
-    const {cellSize, cellFill, cellMap, updateCellMap} = props;
-    const {puzzle} = usePuzzleByRoute();
-    if (!puzzle) return;
+    const {
+        puzzle,
+        cellSize,
+        cellFill,
+        cellMap,
+        updateCellMap
+    } = props;
 
     const dragStartLocation = useRef<DragStartRef>({
         startRow: undefined,
@@ -50,7 +55,7 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
     const getCellFill = (row: number, col: number, map: CellMap, fill: CellFill): CellFill => {
         const currentFill = fill ? fill : cellFill;
 
-        let mappedFill = map[row] ? map[row][col] : undefined;
+        const mappedFill = map[row] ? map[row][col] : undefined;
 
         if (currentFill === mappedFill) {
             return undefined;
@@ -60,10 +65,10 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
     }
 
     const updateMultipleCells = (rowRange: number[], colRange: number[], fill?: CellFill) => {
-        let updatedCellMap = copyCellMap(cellMap);
-        let finalFill = getCellFill(rowRange[0], colRange[0], cellMap, fill)
+        const updatedCellMap = copyCellMap(cellMap);
+        const finalFill = getCellFill(rowRange[0], colRange[0], cellMap, fill)
 
-        for (let r of rowRange) {
+        for (const r of rowRange) {
             if (!updatedCellMap[r]) {
                 updatedCellMap[r] = [];
             }
@@ -81,7 +86,7 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
     };
 
     const cellEventsMap = {
-        onMouseDown: (startRow: number, startCol: number, {currentTarget:startElement}: React.MouseEvent) => {
+        onMouseDown: (startRow: number, startCol: number, {currentTarget: startElement}: React.MouseEvent) => {
             // debugger
             if (startElement instanceof HTMLTableCellElement) {
                 Object.assign(dragStartLocation.current, {

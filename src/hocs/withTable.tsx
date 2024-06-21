@@ -8,7 +8,14 @@ interface WithTableProps extends I_TableStructure {
 
 const getCellData = (row: number, col: number, cellData: number[][] | undefined): any | undefined => {
     if (!cellData) return;
-    return cellData[row][col];
+    try {
+        const data = cellData[row][col];
+        return data;
+    } catch (e) {
+        console.table(cellData)
+        throw new Error(`Could not build table: row: ${row}, col: ${col}`);
+    }
+
 }
 
 //todo:maybe better naming, we are making cells only

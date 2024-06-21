@@ -1,29 +1,27 @@
 import {ReactNode, useCallback} from "react";
-import {usePuzzleByRoute} from "@/hooks/usePuzzle";
 import {LegendType, LegendField} from "@/types";
 import withTable from "../../hocs/withTable";
-import {I_PuzzleCell,} from "@/interfaces";
+import {I_Puzzle, I_PuzzleCell,} from "@/interfaces";
 import PuzzleCell from "./PuzzleCell";
 import clsx from "clsx";
 
 interface PuzzleLegendProps {
+    puzzle: I_Puzzle,
     children?: ReactNode,
     type: LegendType,
     cellSize?: number
 }
 
-const PuzzleLegend = ({children, type, cellSize}: PuzzleLegendProps) => {
-        const {puzzle} = usePuzzleByRoute();
-        if (!puzzle) return null;
+const PuzzleLegend = ({puzzle, children, type, cellSize}: PuzzleLegendProps) => {
         const legend: number[][] = puzzle.legend[type];
         const legendSize = puzzle.legendSize[type];
 
         const getLegendData = useCallback((): LegendField => {
             if (type !== "horizontal") return legend
 
-            let rowArray = []
+            const rowArray = []
             for (let r = 0; r < legendSize.rows; r++) {
-                let newRow = legend.map(item => {
+                const newRow = legend.map(item => {
                     return item[r]
                 });
                 rowArray.push(newRow)
