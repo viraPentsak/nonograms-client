@@ -39,20 +39,20 @@ const userSolutionFetcher: Fetcher<UserSolution> = async (url: string) => {
 export const useUserSolution = (puzzleId: string, userId: string): useSolutionProps => {
     //TODO: get real user id
     const route = paths.userSolution(puzzleId, userId)
-    const {data, error, isLoading} = useSWR(route, userSolutionFetcher);
+    const {data: solution, error, isLoading} = useSWR(route, userSolutionFetcher);
 
-    if(data?.solution){
+    if(solution){
         return {
             error,
             isLoading,
-            solution: data.solution
+            solution
         }
     }
 
     return {
         error,
         isLoading,
-        solution: data
+        solution
     }
 
 }

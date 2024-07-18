@@ -22,8 +22,7 @@ type GeneralActions = {
         | "puzzle/reset"
         | "puzzle/increase-size"
         | "puzzle/reset-size"
-        | "puzzle/decrease-size",
-    payload?: boolean | CellFill | CellMap | number
+        | "puzzle/decrease-size"
 };
 
 type FillAction = {
@@ -44,7 +43,6 @@ type ResetModalAction = {
 type Action = GeneralActions | FillAction | CellMapAction | ResetModalAction;
 
 const puzzleReducer = (state: PuzzleState, action: Action): PuzzleState => {
-    console.log(action);
     switch (action.type) {
         case "puzzle/reset":
             state.showResetModal = false;
@@ -127,11 +125,11 @@ const PuzzleContent = ({puzzle}: PuzzleContentProps) => {
         }
     };
 
-    const closeModalHandler = () => dispatch({type: "puzzle/reset-modal-show", payload: false});
-
-    const resetHandler = () => {
-        dispatch({type: "puzzle/reset"})
-    };
+    const modalHandlers = {
+        onReset: () => dispatch({type: "puzzle/reset"}),
+        onCancel: () => dispatch({type: "puzzle/reset-modal-show", payload: false}),
+        onClose: () => dispatch({type: "puzzle/reset-modal-show", payload: false})
+    }
 
     return (
         <div className="puzzle">
@@ -171,9 +169,7 @@ const PuzzleContent = ({puzzle}: PuzzleContentProps) => {
             </table>
             <div className="mb-4"/>
             <PuzzleTools {...toolsHandlers}/>
-            {showResetModal && <PuzzleModal onReset={resetHandler}
-                                            onCancel={closeModalHandler}
-                                            onClose={closeModalHandler}/>}
+            {showResetModal && <PuzzleModal {...modalHandlers}/>}
         </div>
     );
 };

@@ -39,7 +39,7 @@ function withTable<P extends object>(
                 let cellsArray = [];
 
                 for (let col = 0; col < tableCols; col++) {
-                    const key = `${prefix || ""}:row:${row}|col:${col}`;
+                    const key = `${prefix || ""}|row:${row}|col:${col}`;
                     const data = getCellData(row, col, cellData);
                     cellsArray.push(
                         <WrappedComponent  {...props as P}

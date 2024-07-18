@@ -16,12 +16,12 @@ interface usePuzzleProps extends Pick<SWRResponse, "error" | "isLoading"> {
 export const usePuzzle = (id: string): usePuzzleProps => {
 
     const route = paths.puzzleURL(id);
-    const {data, error, isLoading} = useSWR(route, puzzleFetcher);
+    const {data: puzzle, error, isLoading} = useSWR(route, puzzleFetcher);
 
     return {
         error,
         isLoading,
-        puzzle: data
+        puzzle
     }
 }
 

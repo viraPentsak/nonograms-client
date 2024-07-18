@@ -12,9 +12,7 @@ const PuzzlesRoute = () => {
         return <Error error={{message: "Error loading puzzle. Try again later"}}/>
     }
 
-    return <div>
-        <Puzzle/>
-    </div>
+    return <Puzzle/>;
 };
 
 export default PuzzlesRoute;
