@@ -66,7 +66,7 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
 
     const updateMultipleCells = (rowRange: number[], colRange: number[], fill?: CellFill) => {
         const updatedCellMap = copyCellMap(cellMap);
-        const finalFill = getCellFill(rowRange[0], colRange[0], cellMap, fill)
+        const finalFill = getCellFill(rowRange[0], colRange[0], cellMap, fill);
 
         for (const r of rowRange) {
             if (!updatedCellMap[r]) {
@@ -97,8 +97,6 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
         },
 
         onMouseUp: (row: number, col: number, e: React.MouseEvent) => {
-            //todo: update to fill out one line only
-
             const {startRow, startCol, startElement} = dragStartLocation.current;
 
             if (
@@ -106,20 +104,30 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
                 || typeof startCol === "undefined"
                 || !(startElement instanceof HTMLTableCellElement)) return;
 
+            //we take bigger number as the cells that matter more
             const rowRange = getNumbersRange(startRow, row);
             const colRange = getNumbersRange(startCol, col);
-            startElement.style.opacity = "1";
-            resetDragStartRef();
+            const rowDifference = rowRange.length;
+            const colDifference = colRange.length;
+            let params;
+            if (rowDifference >= colDifference) {
+                params = [rowRange, [startCol]];
+            } else {
+                params = [[startRow], colRange];
+            }
 
             if (e.button > 0) {
-                updateMultipleCells(rowRange, colRange, "none");
-                return;
+                params.push("none");
             }
-            updateMultipleCells(rowRange, colRange);
+
+            startElement.style.opacity = "1";
+            resetDragStartRef();
+            updateMultipleCells(...params);
         }
     }
 
-    const TableBody = withTable<I_PuzzleCell>(PuzzleCell, {cols: width, rows: height});
+    const tableProps = {cols: width, rows: height};
+    const TableBody = withTable<I_PuzzleCell>(PuzzleCell, tableProps, puzzle.id);
 
     return (
         <table cellPadding={cellSize}
