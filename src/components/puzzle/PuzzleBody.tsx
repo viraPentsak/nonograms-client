@@ -1,4 +1,4 @@
-import React, {FC, useRef} from "react";
+import {FC, useRef} from "react";
 import {I_Puzzle, I_PuzzleCell} from "@/interfaces";
 import {CellFill, CellMap} from "@/types";
 import PuzzleCell from "./PuzzleCell";
@@ -64,8 +64,23 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
         return currentFill;
     }
 
-    const updateMultipleCells = (rowRange: number[], colRange: number[], fill?: CellFill) => {
+    const getCellsRange  = (startRow:number, row:number, startCol:number, col:number):number[][] => {
+
+        //we take bigger number as the cells that matter more
+        const rowRange = getNumbersRange(startRow, row);
+        const colRange = getNumbersRange(startCol, col);
+        const rowDifference = rowRange.length;
+        const colDifference = colRange.length;
+
+        if (rowDifference >= colDifference) {
+            return [rowRange, [startCol]];
+        }
+        return [[startRow], colRange];
+    };
+
+    const updateMultipleCells = (params: number[][], fill?: CellFill) => {
         const updatedCellMap = copyCellMap(cellMap);
+        const [rowRange, colRange] = params;
         const finalFill = getCellFill(rowRange[0], colRange[0], cellMap, fill);
 
         for (const r of rowRange) {
@@ -73,7 +88,7 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
                 updatedCellMap[r] = [];
             }
 
-            for (let c of colRange) {
+            for (const c of colRange) {
                 updatedCellMap[r][c] = finalFill;
             }
         }
@@ -104,25 +119,17 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
                 || typeof startCol === "undefined"
                 || !(startElement instanceof HTMLTableCellElement)) return;
 
-            //we take bigger number as the cells that matter more
-            const rowRange = getNumbersRange(startRow, row);
-            const colRange = getNumbersRange(startCol, col);
-            const rowDifference = rowRange.length;
-            const colDifference = colRange.length;
-            let params;
-            if (rowDifference >= colDifference) {
-                params = [rowRange, [startCol]];
-            } else {
-                params = [[startRow], colRange];
-            }
+            const params = getCellsRange(startRow, row, startCol, col);
+            let fill;
 
             if (e.button > 0) {
-                params.push("none");
+                fill = "none";
             }
 
             startElement.style.opacity = "1";
+
             resetDragStartRef();
-            updateMultipleCells(...params);
+            updateMultipleCells(params, fill);
         }
     }
 
