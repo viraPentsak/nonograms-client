@@ -22,7 +22,7 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "baseUrl": ".",
+    "baseUrl": "./",
     "paths": {
       "@/*": ["./src/*"]
     },
@@ -31,7 +31,7 @@
       "vite/client"
     ]
   },
-  "include": ["vite.config.ts"],
+  "include": ["vite.config.ts", "src"],
   "references": [
     {
       "path": "./tsconfig.node.json"

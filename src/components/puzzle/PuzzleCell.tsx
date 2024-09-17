@@ -1,29 +1,25 @@
-import React, {FC, CSSProperties, useCallback} from "react";
+import React, {FC, CSSProperties} from "react";
 import clsx from "clsx";
 import {I_PuzzleCell} from "@/interfaces";
+import {CellCoords} from "@/types";
 
-interface PuzzleCellProps extends I_PuzzleCell {
+export interface PuzzleCellProps extends I_PuzzleCell {
     className?: string,
-    data?: any
+    data?: any;
+    eventsMap?: { [index: string]: (e: React.MouseEvent<HTMLTableCellElement>, coords: CellCoords) => void }
 }
 
 const PuzzleCell: FC<PuzzleCellProps> = (props) => {
     const {cellMap, eventsMap, data, row = 1, col = -1} = props;
     const cellMapValue = cellMap[row] ? cellMap[row][col] : undefined;
+    const eventHandlers: { [i: string]: React.MouseEventHandler<HTMLTableCellElement> } = {};
 
-    const handleMouseDown = useCallback(
-        (event: React.MouseEvent<HTMLTableCellElement>) => {
-            if (!eventsMap || !("onMouseDown" in eventsMap)) return
-
-            return eventsMap.onMouseDown(row, col, event);
-        }, [row, col]);
-
-    const handleMouseUp = useCallback(
-        (event: React.MouseEvent<HTMLTableCellElement>) => {
-            if (!eventsMap || !("onMouseUp" in eventsMap)) return
-
-            return eventsMap.onMouseUp(row, col, event)
-        }, [row, col]);
+    if (eventsMap) {
+        Object.keys(eventsMap).map((key) => {
+            eventHandlers[key] = (e) => eventsMap[key](e, {row, col});
+        })
+    }
+    console.log(eventHandlers)
 
     const classNames = clsx(
         props.className,
@@ -39,8 +35,7 @@ const PuzzleCell: FC<PuzzleCellProps> = (props) => {
 
     return (
         <td className={classNames}
-            onMouseDown={handleMouseDown}
-            onMouseUp={handleMouseUp}
+            {...eventHandlers}
             style={style}>
             <span className="text-sx">{data}</span>
         </td>

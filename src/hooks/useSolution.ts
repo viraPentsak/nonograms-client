@@ -1,9 +1,9 @@
 import useSWR, {Fetcher, SWRResponse} from "swr";
 import axios from "axios";
-import {Solution} from "../types";
+import {Solution} from "@/types";
 import paths from "@/paths";
 // import {useParams} from "react-router-dom";
-import {I_HasId} from "../interfaces";
+import {I_HasId} from "@/interfaces";
 
 // const solutionFetcher: Fetcher<Solution> = async (url: string) => {
 //     const res = await axios.get<Solution>(url);

@@ -1,8 +1,8 @@
 import {ReactNode, useCallback} from "react";
 import {LegendType, LegendField} from "@/types";
 import withTable from "../../hocs/withTable";
-import {I_Puzzle, I_PuzzleCell,} from "@/interfaces";
-import PuzzleCell from "./PuzzleCell";
+import {I_Puzzle,} from "@/interfaces";
+import PuzzleCell, {PuzzleCellProps} from "./PuzzleCell";
 import clsx from "clsx";
 
 interface PuzzleLegendProps {
@@ -40,7 +40,7 @@ const PuzzleLegend = ({puzzle, children, type, cellSize}: PuzzleLegendProps) => 
             reverseRows: type === "horizontal"
         };
 
-        const TableBody = withTable<I_PuzzleCell>(
+        const TableBody = withTable<PuzzleCellProps>(
             PuzzleCell,
             tableProps,
             type,

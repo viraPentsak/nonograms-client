@@ -1,7 +1,7 @@
-import {FC, useRef} from "react";
-import {I_Puzzle, I_PuzzleCell} from "@/interfaces";
-import {CellFill, CellMap} from "@/types";
-import PuzzleCell from "./PuzzleCell";
+import React, {FC, useRef} from "react";
+import {I_Puzzle} from "@/interfaces";
+import {CellCoords, CellFill, CellMap} from "@/types";
+import PuzzleCell, {PuzzleCellProps} from "./PuzzleCell";
 import withTable from "@/hocs/withTable";
 import {getNumbersRange} from "@/helpers";
 
@@ -64,7 +64,7 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
         return currentFill;
     }
 
-    const getCellsRange  = (startRow:number, row:number, startCol:number, col:number):number[][] => {
+    const getCellsRange = (startRow: number, row: number, startCol: number, col: number): number[][] => {
 
         //we take bigger number as the cells that matter more
         const rowRange = getNumbersRange(startRow, row);
@@ -101,17 +101,19 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
     };
 
     const cellEventsMap = {
-        onMouseDown: (startRow: number, startCol: number, {currentTarget: startElement}: React.MouseEvent) => {
-            // debugger
-            if (startElement instanceof HTMLTableCellElement) {
+        onMouseDown: ({currentTarget}: React.MouseEvent, {row, col}: CellCoords) => {
+
+            if (currentTarget instanceof HTMLTableCellElement) {
                 Object.assign(dragStartLocation.current, {
-                    startRow, startCol, startElement
+                    startRow: row,
+                    startCol: col,
+                    startElement: currentTarget
                 })
-                startElement.style.opacity = "0.5";
+                currentTarget.style.opacity = "0.5";
             }
         },
 
-        onMouseUp: (row: number, col: number, e: React.MouseEvent) => {
+        onMouseUp: (e: React.MouseEvent, {row, col}: CellCoords) => {
             const {startRow, startCol, startElement} = dragStartLocation.current;
 
             if (
@@ -120,7 +122,7 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
                 || !(startElement instanceof HTMLTableCellElement)) return;
 
             const params = getCellsRange(startRow, row, startCol, col);
-            let fill;
+            let fill: CellFill;
 
             if (e.button > 0) {
                 fill = "none";
@@ -134,7 +136,7 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
     }
 
     const tableProps = {cols: width, rows: height};
-    const TableBody = withTable<I_PuzzleCell>(PuzzleCell, tableProps, puzzle.id);
+    const TableBody = withTable<PuzzleCellProps>(PuzzleCell, tableProps, puzzle.id);
 
     return (
         <table cellPadding={cellSize}

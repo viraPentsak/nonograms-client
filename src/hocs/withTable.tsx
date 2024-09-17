@@ -6,7 +6,7 @@ interface WithTableProps extends I_TableStructure {
     reverseCells?: boolean
 }
 
-const getCellData = (row: number, col: number, cellData: number[][] | undefined): any | undefined => {
+const getCellData = (row: number, col: number, cellData: number[][] | undefined): number | undefined => {
     if (!cellData) return;
     try {
         const data = cellData[row][col];
@@ -15,7 +15,6 @@ const getCellData = (row: number, col: number, cellData: number[][] | undefined)
         console.table(cellData)
         throw new Error(`Could not build table: row: ${row}, col: ${col}`);
     }
-
 }
 
 //todo:maybe better naming, we are making cells only
@@ -32,11 +31,11 @@ function withTable<P extends object>(
         reverseCells
     } = tableProps;
 
-    return (props: { [key: string]: any }) => {
+    return (props: P) => {
         const renderTableBody = () => {
-            let rowsArray = [];
+            const rowsArray = [];
             for (let row = 0; row < tableRows; row++) {
-                let cellsArray = [];
+                const cellsArray = [];
 
                 for (let col = 0; col < tableCols; col++) {
                     const key = `${prefix || ""}|row:${row}|col:${col}`;
