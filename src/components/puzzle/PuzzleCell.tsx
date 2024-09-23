@@ -9,7 +9,7 @@ export interface PuzzleCellProps extends I_PuzzleCell {
     eventsMap?: { [index: string]: (e: React.MouseEvent<HTMLTableCellElement>, coords: CellCoords) => void }
 }
 
-const PuzzleCell: FC<PuzzleCellProps> = (props) => {
+const PuzzleCell: FC<PuzzleCellProps&React.TdHTMLAttributes<HTMLTableCellElement>> = (props) => {
     const {cellMap, eventsMap, data, row = 1, col = -1} = props;
     const cellMapValue = cellMap[row] ? cellMap[row][col] : undefined;
     const eventHandlers: { [i: string]: React.MouseEventHandler<HTMLTableCellElement> } = {};
@@ -19,7 +19,6 @@ const PuzzleCell: FC<PuzzleCellProps> = (props) => {
             eventHandlers[key] = (e) => eventsMap[key](e, {row, col});
         })
     }
-    console.log(eventHandlers)
 
     const classNames = clsx(
         props.className,

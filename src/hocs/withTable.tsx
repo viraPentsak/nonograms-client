@@ -2,17 +2,16 @@ import React from "react";
 import {I_TableStructure} from "@/interfaces";
 
 interface WithTableProps extends I_TableStructure {
-    reverseRows?: boolean,
-    reverseCells?: boolean
+    reverseRows?: boolean
 }
 
 const getCellData = (row: number, col: number, cellData: number[][] | undefined): number | undefined => {
     if (!cellData) return;
     try {
-        const data = cellData[row][col];
+        const data = cellData[row]?.[col];
+        if (!cellData) return
         return data;
     } catch (e) {
-        console.table(cellData)
         throw new Error(`Could not build table: row: ${row}, col: ${col}`);
     }
 }
@@ -27,8 +26,7 @@ function withTable<P extends object>(
     const {
         rows: tableRows,
         cols: tableCols,
-        reverseRows,
-        reverseCells
+        // reverseRows
     } = tableProps;
 
     return (props: P) => {
@@ -36,10 +34,12 @@ function withTable<P extends object>(
             const rowsArray = [];
             for (let row = 0; row < tableRows; row++) {
                 const cellsArray = [];
-
                 for (let col = 0; col < tableCols; col++) {
                     const key = `${prefix || ""}|row:${row}|col:${col}`;
                     const data = getCellData(row, col, cellData);
+
+
+
                     cellsArray.push(
                         <WrappedComponent  {...props as P}
                                            data={data} prefix={prefix}
@@ -47,18 +47,13 @@ function withTable<P extends object>(
                                            key={key}/>
                     )
                 }
-
-                if (reverseCells) {
-                    cellsArray.reverse();
-                }
-
                 rowsArray.push(
                     <tr key={`row-${row}`}>{cellsArray}</tr>
                 )
             }
-            if (reverseRows) {
-                rowsArray.reverse();
-            }
+            // if (reverseRows) {
+            //     rowsArray.reverse();
+            // }
 
             return rowsArray;
         }

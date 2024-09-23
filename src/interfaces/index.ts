@@ -11,7 +11,7 @@ export interface I_TableStructure {
 }
 
 type LegendFields = Record<LegendType, LegendField>
-type LegendSizeFields = Record<LegendType, I_TableStructure>
+export type LegendSizeFields = Record<LegendType, I_TableStructure>
 
 export interface I_PuzzleLegend {
     size: { width: number, height: number },
@@ -29,6 +29,6 @@ export interface I_PuzzleCell extends React.TdHTMLAttributes<HTMLTableCellElemen
     prefix?: string,
     cellMap: CellMap,
     eventsMap?: {
-        [key: string]: Function
+        [key: string]: (...args: any[]) => void
     }
 }

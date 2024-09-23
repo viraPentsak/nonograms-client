@@ -1,4 +1,4 @@
-import React, {FC, useRef} from "react";
+import React, {FC, useEffect, useRef} from "react";
 import {I_Puzzle} from "@/interfaces";
 import {CellCoords, CellFill, CellMap} from "@/types";
 import PuzzleCell, {PuzzleCellProps} from "./PuzzleCell";
@@ -51,6 +51,10 @@ const PuzzleBody: FC<I_PuzzleBodyProps> = (props) => {
         dragStartLocation.current.startCol = undefined;
         dragStartLocation.current.startElement = null;
     }
+
+    useEffect(()=>{
+        resetDragStartRef();
+    }, [puzzle.id])
 
     const getCellFill = (row: number, col: number, map: CellMap, fill: CellFill): CellFill => {
         const currentFill = fill ? fill : cellFill;

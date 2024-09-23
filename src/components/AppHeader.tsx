@@ -21,6 +21,8 @@ after:bottom-0`;
 const links = [
     {url: "/puzzle/id1", text: "Puzzle 1"},
     {url: "/puzzle/id2", text: "Puzzle 2"},
+    // {url: "/puzzle/id3", text: "Puzzle 3"},
+    {url: "/puzzle/id4", text: "Puzzle 4"},
     {url: "/", text: "Home"},
 ];
 
