@@ -1,12 +1,38 @@
-##Puzzle legend structure
+###  About puzzle
+Nonogram, griddlers, Crosspix
 
 
-###Legend numbers are representing the filled cells go row after row in the following directions:
 
-- For horizontal legend above the puzzle: bottom --> top.   
-  NB!  In data array for horizontal legend on the first level are cols, and second - rows
-- For vertical legend to left of the puzzle: right --> left
+### General setup
 
-Thus backend returns data according to these rules.
+- Rename [sample_db.json](sample_db.json) into [db.json](db.json) to mock puzzle data. 
+- Rename [.env.example](.env.example) into [.env.local](.env.local).
+- Run `npm i` to install packages
+- Run `npm start` to develop (concurrently runs the `json-server`, `vite`, and `tsc -w`).
+- Open  http://localhost:5173/ for **puzzle** and/or  http://localhost:3000/ for **json-server**
 
-###But the puzzle itself (solution map) goes from left to right, from top to the bottom 
+
+###  API - WIP
+- **`GET`** /puzzles/:id
+- **`GET`** /solutions/:id - WIP
+- **`GET`** /userSolutions/:id - WIP
+ 
+
+
+### Puzzle features:
+- Increase/decrease cell size
+- Switch color/cross-out
+- Fill the cells with color/cross-out
+- Cross out legend number
+- Reset puzzle (size, legend, cells fill)
+    
+#### For later (or maybe not))
+- Check for mistakes (limited number of times)
+- Hints
+- Get full solution
+
+### User features - WIP
+- Login/logout - WIP
+- Register - WIP
+- Save puzzle progress - WIP
+- Load puzzle progress - WIP
